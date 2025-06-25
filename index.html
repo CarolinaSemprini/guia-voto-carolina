@@ -5,40 +5,86 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Guía de Voto - Carolina</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #f0f4f8; color: #333; padding: 20px; }
-    .container { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    body { font-family: Arial, sans-serif; background: #eef2f5; color: #333; padding: 20px; }
+    .container { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
     h1 { text-align: center; color: #1a73e8; }
-    button { padding: 10px 20px; margin: 10px 0; background: #1a73e8; color: white; border: none; border-radius: 8px; cursor: pointer; width: 100%; }
-    .result { margin-top: 20px; font-weight: bold; text-align: center; }
+    button { padding: 12px; margin: 8px 0; width: 100%; background: #1a73e8; color: white; border: none; border-radius: 8px; cursor: pointer; }
+    .result, .partidos { margin-top: 20px; }
+    .partidos li { margin: 6px 0; }
+    .partidos a { color: #1a73e8; text-decoration: none; }
+    .hidden { display: none; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Guía de Voto 2025 - Carolina</h1>
-    <p>Responda las siguientes preguntas para conocer qué partido o enfoque coincide más con sus ideas:</p>
+    <p>Decidí qué tema te importa más y filtrá los resultados según tu interés:</p>
 
     <div id="quiz">
-      <p><strong>1. ¿Qué tema le preocupa más?</strong></p>
-      <button onclick="next(1)">Educación</button>
-      <button onclick="next(2)">Economía</button>
-      <button onclick="next(3)">Seguridad</button>
+      <p><strong>1. ¿Qué tema te preocupa más?</strong></p>
+      <button onclick="setTema(1)">Educación</button>
+      <button onclick="setTema(2)">Economía</button>
+      <button onclick="setTema(3)">Seguridad</button>
+    </div>
+
+    <div id="genero" class="hidden">
+      <p><strong>2. ¿Querés ver candidaturas de algún género en particular?</strong></p>
+      <button onclick="filtrarGenero('t')">Todas</button>
+      <button onclick="filtrarGenero('f')">Femenino</button>
+      <button onclick="filtrarGenero('m')">Masculino</button>
     </div>
 
     <div class="result" id="result"></div>
+    <ul class="partidos" id="partidos"></ul>
   </div>
 
   <script>
-    function next(choice) {
-      const result = document.getElementById('result');
-      const quiz = document.getElementById('quiz');
-      quiz.style.display = 'none';
+    let temaSeleccionado = null;
 
-      let message = '';
-      if (choice === 1) message = 'Coincidís con propuestas centradas en el fortalecimiento educativo.';
-      if (choice === 2) message = 'Tu enfoque es la reactivación económica y la generación de empleo.';
-      if (choice === 3) message = 'Te importa principalmente la seguridad y el orden público.';
+    const base = {
+      1: {
+        mensaje: 'Te interesan programas educativos.',
+        partidos: [
+          { nombre: 'Gisella Martínez - UCR (Lista Soluciones)', genero: 'f', link: 'https://www.lopinionaustral.com.ar/politica/elecciones-2025-la-ucr-de-santa-cruz-proclamo-la-lista-soluciones-como-unica-candidatura-547029.html' },
+          { nombre: 'SER Santa Cruz - Partido provincial', genero: 'm', link: 'https://es.wikipedia.org/wiki/Somos_Energ%C3%ADa_para_Renovar_Santa_Cruz' }
+        ]
+      },
+      2: {
+        mensaje: 'Te preocupa la economía y el empleo.',
+        partidos: [
+          { nombre: 'SER Santa Cruz - Proyecto regional', genero: 'm', link: 'https://www.sersantacruz.com.ar' },
+          { nombre: 'Gisella Martínez - UCR (Lista Soluciones)', genero: 'f', link: 'https://www.lopinionaustral.com.ar/politica/elecciones-2025-la-ucr-de-santa-cruz-proclamo-la-lista-soluciones-como-unica-candidatura-547029.html' }
+        ]
+      },
+      3: {
+        mensaje: 'Te importa la seguridad y el orden público.',
+        partidos: [
+          { nombre: 'Cambia Santa Cruz', genero: 'm', link: 'https://es.wikipedia.org/wiki/Elecciones_provinciales_de_Santa_Cruz_de_2023' },
+          { nombre: 'UCR - Lista Soluciones', genero: 'f', link: 'https://www.lopinionaustral.com.ar/politica/elecciones-2025-la-ucr-de-santa-cruz-proclamo-la-lista-soluciones-como-unica-candidatura-547029.html' }
+        ]
+      }
+    };
 
-      result.textContent = message + ' Consultá plataformas de partidos locales para saber más.';
+    function setTema(t) {
+      temaSeleccionado = t;
+      document.getElementById('quiz').style.display = 'none';
+      document.getElementById('genero').classList.remove('hidden');
+    }
+
+    function filtrarGenero(g) {
+      const datos = base[temaSeleccionado];
+      const partidosFiltrados = g === 't' ? datos.partidos : datos.partidos.filter(p => p.genero === g);
+
+      document.getElementById('genero').style.display = 'none';
+      document.getElementById('result').textContent = datos.mensaje;
+
+      const ul = document.getElementById('partidos');
+      ul.innerHTML = '';
+      partidosFiltrados.forEach(p => {
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="${p.link}" target="_blank">${p.nombre}</a>`;
+        ul.appendChild(li);
+      });
     }
   </script>
 </body>
