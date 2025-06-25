@@ -1,27 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>  
-  <meta charset="UTF-8">  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-  <title>Guía de Voto - Carolina</title>  
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía de Voto - Carolina</title>
   <style>
-    body { font-family: Arial,sans-serif; background: #eef2f5; color: #333; padding: 20px; }
-    .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius:12px; }
-    h1,h2 { color: #1a73e8; text-align:center; }
-    button { padding:12px; margin:8px 0; width:100%; background:#1a73e8; color:white; border:none; border-radius:8px; cursor:pointer; }
-    .hidden{display:none;} .item{padding:10px; border:1px solid #ddd; margin:10px 0; border-radius:8px;}
-    .item h3{margin:0;} .item p{margin:6px 0;} .back{margin-top:20px;}
-    img { max-width: 100%; border-radius: 8px; margin-top: 8px; }
+    body { font-family: Arial, sans-serif; background: #eef2f5; color: #333; padding: 20px; }
+    .container { max-width: 700px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    h1, h2 { color: #1a73e8; text-align: center; }
+    button { padding: 10px; margin: 10px 0; width: 100%; background: #1a73e8; color: white; border: none; border-radius: 8px; cursor: pointer; }
+    .hidden { display: none; }
+    .item { padding: 15px; border: 1px solid #ddd; margin: 10px 0; border-radius: 8px; background: #f9f9f9; }
+    .item h3 { margin: 0 0 5px 0; }
+    .item img { max-width: 100%; border-radius: 8px; margin-top: 10px; }
+    .back { margin-top: 20px; }
+    iframe { width: 100%; height: 500px; border: none; margin-top: 20px; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Guía de Voto - Carolina</h1>
+    <h1>Guía de Voto 2025 - Carolina</h1>
     <div id="step1">
       <p><strong>1. ¿Qué tema te preocupa más?</strong></p>
-      <button onclick="setTema(1)">Educación</button>
-      <button onclick="setTema(2)">Economía</button>
-      <button onclick="setTema(3)">Seguridad</button>
+      <button onclick="setTema('Educación')">Educación</button>
+      <button onclick="setTema('Economía')">Economía</button>
+      <button onclick="setTema('Seguridad')">Seguridad</button>
+      <button onclick="setTema('Salud')">Salud</button>
     </div>
     <div id="step2" class="hidden">
       <p><strong>2. Filtro por género:</strong></p>
@@ -34,94 +38,76 @@
       <div id="items"></div>
       <button class="back" onclick="reset()">◀ Volver al inicio</button>
     </div>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScZ7FeebackFormURL/viewform?embedded=true" allowfullscreen></iframe>
   </div>
   <script>
     const data = {
-      1: { tema: "Educación", candidatos: [
-        {id:'jara',nombre:'Javier S. Jara',distrito:'Las Heras',bloque:'Por Santa Cruz',genero:'m',
-         bio:'Vicepresidente 1° de la Cámara, con trayectoria en gestión local.',
-         posiciones:{Educación:'Apoya recursos a escuelas rurales.'},
-         foto:'https://via.placeholder.com/300x200?text=Javier+Jara',
-         links:['https://www.santacruz.gob.ar/diputados/jara']
-        },
-        {id:'echazu',nombre:'Eloy D. Echazú',distrito:'Río Gallegos',bloque:'Unión por la Patria',genero:'m',
-         bio:'Actual diputado provincial, trabaja en comisiones de juventud.',
-         posiciones:{Educación:'Promueve convenios con universidades.'},
-         foto:'https://via.placeholder.com/300x200?text=Eloy+Echazu',
-         links:['https://www.santacruz.gob.ar/diputados/echazu']
-        },
-        {id:'loreiro',nombre:'Fabiola Loreiro',distrito:'Puerto Santa Cruz',bloque:'Por Santa Cruz',genero:'f',
-         bio:'Diputada activa en puericultura y salud familiar.',
-         posiciones:{Educación:'Impulsó programas de apoyo escolar.'},
-         foto:'https://via.placeholder.com/300x200?text=Fabiola+Loreiro',
-         links:['https://www.santacruz.gob.ar/diputados/loreiro']
-        },
-        {id:'peralta',nombre:'Daniel Peralta',distrito:'Provincia',bloque:'Unión por la Patria',genero:'m',
-         bio:'Ex gobernador y diputado, con amplia trayectoria.',
-         posiciones:{Educación:'Experiencia en reformas educativas.'},
-         foto:'https://via.placeholder.com/300x200?text=Daniel+Peralta',
-         links:['https://es.wikipedia.org/wiki/Daniel_Peralta']
-        }
-      ]},
-      2: { tema: "Economía", candidatos: [
-        {id:'jara',nombre:'Javier S. Jara',genero:'m',distrito:'Las Heras',bloque:'Por Santa Cruz',bio:'...',
-         posiciones:{Economía:'Apoyo a PyMEs locales.'},
-         foto:'https://via.placeholder.com/300x200?text=Javier+Jara',
-         links:['https://www.santacruz.gob.ar/diputados/jara']
-        },
-        {id:'peralta',nombre:'Daniel Peralta',genero:'m',distrito:'Provincia',bloque:'Unión por la Patria',bio:'...',
-         posiciones:{Economía:'Promueve inversiones y empleo.'},
-         foto:'https://via.placeholder.com/300x200?text=Daniel+Peralta',
-         links:['https://es.wikipedia.org/wiki/Daniel_Peralta']
-        }
-      ]},
-      3: { tema: "Seguridad", candidatos: [
-        {id:'echazu',nombre:'Eloy D. Echazú',genero:'m',distrito:'Río Gallegos',bloque:'Unión por la Patria',bio:'...',
-         posiciones:{Seguridad:'Mayor presencia policial urbana.'},
-         foto:'https://via.placeholder.com/300x200?text=Eloy+Echazu',
-         links:['https://www.santacruz.gob.ar/diputados/echazu']
-        },
-        {id:'loreiro',nombre:'Fabiola Loreiro',genero:'f',distrito:'Puerto Santa Cruz',bloque:'Por Santa Cruz',bio:'...',
-         posiciones:{Seguridad:'Foco en seguridad vial y comunitaria.'},
-         foto:'https://via.placeholder.com/300x200?text=Fabiola+Loreiro',
-         links:['https://www.santacruz.gob.ar/diputados/loreiro']
-        }
-      ]}
+      'Educación': [
+        {nombre:'Javier S. Jara', genero:'m', distrito:'Las Heras', bloque:'Por Santa Cruz', bio:'Vicepresidente 1° de la Cámara, con trayectoria en gestión local.', posicion:'Apoya recursos a escuelas rurales.', foto:'https://upload.wikimedia.org/wikipedia/commons/8/89/Javier_Jara.jpg', rss:'https://www.lopinionaustral.com.ar/rss'},
+        {nombre:'Fabiola Loreiro', genero:'f', distrito:'Puerto Santa Cruz', bloque:'Por Santa Cruz', bio:'Diputada activa en puericultura.', posicion:'Impulsó programas de apoyo escolar.', foto:'https://upload.wikimedia.org/wikipedia/commons/a/a1/Fabiola_Loreiro.jpg', rss:'https://www.lavanguardia.com/rss'}
+      ],
+      'Economía': [
+        {nombre:'Daniel Peralta', genero:'m', distrito:'Provincia', bloque:'Unión por la Patria', bio:'Ex gobernador, experiencia en temas económicos.', posicion:'Promueve inversiones y empleo.', foto:'https://upload.wikimedia.org/wikipedia/commons/5/5c/Daniel_Peralta.jpg', rss:'https://www.pagina12.com.ar/rss'}
+      ],
+      'Seguridad': [
+        {nombre:'Eloy Echazú', genero:'m', distrito:'Río Gallegos', bloque:'Unión por la Patria', bio:'Participa en comisiones de juventud.', posicion:'Mayor presencia policial urbana.', foto:'https://upload.wikimedia.org/wikipedia/commons/9/9d/Eloy_Echazu.jpg', rss:'https://www.infobae.com/america/rss'}
+      ],
+      'Salud': [
+        {nombre:'Fabiola Loreiro', genero:'f', distrito:'Puerto Santa Cruz', bloque:'Por Santa Cruz', bio:'Impulsa legislación de salud materna.', posicion:'Promueve atención primaria.', foto:'https://upload.wikimedia.org/wikipedia/commons/a/a1/Fabiola_Loreiro.jpg', rss:'https://www.clarin.com/rss'}
+      ]
     };
 
-    let tema, genero;
+    let tema = '', genero = '';
 
-    function setTema(t){
+    function setTema(t) {
       tema = t;
       document.getElementById('step1').classList.add('hidden');
       document.getElementById('step2').classList.remove('hidden');
     }
 
-    function filtrarGenero(g){
+    function filtrarGenero(g) {
       genero = g;
-      const arr = data[tema].candidatos.filter(c => genero==='t'||c.genero===genero);
+      const candidatos = data[tema].filter(c => g === 't' || c.genero === g);
       const items = document.getElementById('items');
       items.innerHTML = '';
-      arr.forEach(c => {
+
+      candidatos.forEach(c => {
         const div = document.createElement('div');
         div.className = 'item';
         div.innerHTML = `<h3>${c.nombre}</h3>
           <p><strong>Distrito:</strong> ${c.distrito} | <strong>Bloque:</strong> ${c.bloque}</p>
           <p>${c.bio}</p>
-          <p><strong>${data[tema].tema}:</strong> ${c.posiciones[data[tema].tema]||'Sin info específica.'}</p>
-          ${c.foto ? `<img src="${c.foto}" alt="${c.nombre}"/>` : ''}
-          <p>Más info:</p><ul>${c.links.map(l=>`<li><a href="${l}" target="_blank">${l}</a></li>`).join('')}</ul>`;
+          <p><strong>${tema}:</strong> ${c.posicion}</p>
+          <img src="${c.foto}" alt="${c.nombre}">
+          <p><strong>Noticias recientes:</strong></p>
+          <ul id="rss-${c.nombre.replace(/\s+/g,'')}">Cargando...</ul>`;
         items.appendChild(div);
+        loadRSS(c.rss, `rss-${c.nombre.replace(/\s+/g,'')}`);
       });
+
       document.getElementById('step2').classList.add('hidden');
       document.getElementById('resultado').classList.remove('hidden');
     }
 
-    function reset(){
-      tema = genero = null;
+    function reset() {
+      tema = '';
+      document.getElementById('step1').classList.remove('hidden');
       document.getElementById('step2').classList.add('hidden');
       document.getElementById('resultado').classList.add('hidden');
-      document.getElementById('step1').classList.remove('hidden');
+    }
+
+    function loadRSS(feedUrl, elementId) {
+      fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`)
+        .then(res => res.json())
+        .then(data => {
+          const el = document.getElementById(elementId);
+          if (!data.items) return el.innerHTML = '<li>No hay noticias disponibles</li>';
+          el.innerHTML = data.items.slice(0, 3).map(i => `<li><a href="${i.link}" target="_blank">${i.title}</a></li>`).join('');
+        })
+        .catch(() => {
+          const el = document.getElementById(elementId);
+          el.innerHTML = '<li>Error al cargar noticias</li>';
+        });
     }
   </script>
 </body>
