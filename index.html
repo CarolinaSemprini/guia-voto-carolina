@@ -3,113 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> Información</title>
+  <title>Participación Ciudadana - Carolina</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #eef2f5; color: #333; padding: 20px; }
-    .container { max-width: 700px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-    h1, h2 { color: #1a73e8; text-align: center; }
-    button { padding: 10px; margin: 10px 0; width: 100%; background: #1a73e8; color: white; border: none; border-radius: 8px; cursor: pointer; }
-    .hidden { display: none; }
-    .item { padding: 15px; border: 1px solid #ddd; margin: 10px 0; border-radius: 8px; background: #f9f9f9; }
-    .item h3 { margin: 0 0 5px 0; }
-    .item img { max-width: 100%; border-radius: 8px; margin-top: 10px; }
-    .back { margin-top: 20px; }
-    iframe { width: 100%; height: 600px; border: none; margin-top: 20px; }
-    a { word-wrap: break-word; display: block; }
+    body { font-family: Arial, sans-serif; background: #f0f4f8; color: #333; padding: 20px; }
+    .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    h1 { text-align: center; color: #1a73e8; }
+    button { padding: 10px 20px; margin: 10px 0; background: #1a73e8; color: white; border: none; border-radius: 8px; cursor: pointer; width: 100%; }
+    textarea, input[type="text"] { width: 100%; padding: 10px; margin: 10px 0; border-radius: 8px; border: 1px solid #ccc; }
+    .response { margin-top: 20px; text-align: center; display: none; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Guía de Voto 2025 - Carolina</h1>
-    <div id="step1">
-      <p><strong>1. ¿Qué tema te preocupa más?</strong></p>
-      <button onclick="setTema('Educación')">Educación</button>
-      <button onclick="setTema('Economía')">Economía</button>
-      <button onclick="setTema('Seguridad')">Seguridad</button>
-      <button onclick="setTema('Salud')">Salud</button>
+    <h1>Democracia Directa Digital</h1>
+    <p>Proponé, opiná y participá desde tu celular. El municipio te escucha.</p>
+
+    <form id="form">
+      <label><strong>¿Qué te gustaría mejorar en tu barrio?</strong></label>
+      <textarea id="idea" rows="4" placeholder="Escribí tu propuesta aquí..." required></textarea>
+
+      <label><strong>Tu nombre (opcional):</strong></label>
+      <input type="text" id="nombre" placeholder="Ej: Ana López">
+
+      <button type="submit">Enviar propuesta</button>
+    </form>
+
+    <div class="response" id="response">
+      <h2>¡Gracias por participar!</h2>
+      <p>Tu propuesta ha sido registrada. Seguinos para ver los resultados mensuales.</p>
     </div>
-    <div id="step2" class="hidden">
-      <p><strong>2. Filtro por género:</strong></p>
-      <button onclick="filtrarGenero('t')">Todas</button>
-      <button onclick="filtrarGenero('f')">Femenino</button>
-      <button onclick="filtrarGenero('m')">Masculino</button>
-    </div>
-    <div id="resultado" class="hidden">
-      <h2>Resultados</h2>
-      <div id="items"></div>
-      <button class="back" onclick="reset()">◀ Volver al inicio</button>
-    </div>
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScltSYKKuj3BfgIdjMyP7dyRzq3WmQEP2SeWoW1hdYqx-4Vfw/viewform?embedded=true" allowfullscreen></iframe>
   </div>
+
   <script>
-    const data = {
-      'Educación': [
-        {nombre:'Javier S. Jara', genero:'m', distrito:'Las Heras', bloque:'Por Santa Cruz', bio:'Vicepresidente 1° de la Cámara, con trayectoria en gestión local.', posicion:'Apoya recursos a escuelas rurales.', foto:'https://carolinasemprini.github.io/img/jara.jpg', rss:'https://www.laventanaindiscretadejh.com/rss.xml'},
-        {nombre:'Fabiola Loreiro', genero:'f', distrito:'Puerto Santa Cruz', bloque:'Por Santa Cruz', bio:'Diputada activa en puericultura.', posicion:'Impulsó programas de apoyo escolar.', foto:'https://carolinasemprini.github.io/img/loreiro.jpg', rss:'https://www.santacruz.gob.ar/rss.xml'}
-      ],
-      'Economía': [
-        {nombre:'Daniel Peralta', genero:'m', distrito:'Provincia', bloque:'Unión por la Patria', bio:'Ex gobernador, experiencia en temas económicos.', posicion:'Promueve inversiones y empleo.', foto:'https://carolinasemprini.github.io/img/peralta.jpg', rss:'https://www.lopinionautral.com.ar/rss'}
-      ],
-      'Seguridad': [
-        {nombre:'Eloy Echazú', genero:'m', distrito:'Río Gallegos', bloque:'Unión por la Patria', bio:'Participa en comisiones de juventud.', posicion:'Mayor presencia policial urbana.', foto:'https://carolinasemprini.github.io/img/echazu.jpg', rss:'https://www.tiempofm.com/rss'}
-      ],
-      'Salud': [
-        {nombre:'Fabiola Loreiro', genero:'f', distrito:'Puerto Santa Cruz', bloque:'Por Santa Cruz', bio:'Impulsa legislación de salud materna.', posicion:'Promueve atención primaria.', foto:'https://carolinasemprini.github.io/img/loreiro.jpg', rss:'https://www.santacruz.gob.ar/rss.xml'}
-      ]
-    };
+    document.getElementById("form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const idea = document.getElementById("idea").value;
+      const nombre = document.getElementById("nombre").value;
 
-    let tema = '', genero = '';
+      // Simula el envío: se puede conectar con Google Sheets o backend real
+      console.log("Propuesta:", idea);
+      console.log("Nombre:", nombre);
 
-    function setTema(t) {
-      tema = t;
-      document.getElementById('step1').classList.add('hidden');
-      document.getElementById('step2').classList.remove('hidden');
-    }
-
-    function filtrarGenero(g) {
-      genero = g;
-      const candidatos = data[tema].filter(c => g === 't' || c.genero === g);
-      const items = document.getElementById('items');
-      items.innerHTML = '';
-
-      candidatos.forEach(c => {
-        const div = document.createElement('div');
-        div.className = 'item';
-        div.innerHTML = `<h3>${c.nombre}</h3>
-          <p><strong>Distrito:</strong> ${c.distrito} | <strong>Bloque:</strong> ${c.bloque}</p>
-          <p>${c.bio}</p>
-          <p><strong>${tema}:</strong> ${c.posicion}</p>
-          <img src="${c.foto}" alt="${c.nombre}">
-          <p><strong>Noticias recientes:</strong></p>
-          <ul id="rss-${c.nombre.replace(/\s+/g,'')}">Cargando...</ul>`;
-        items.appendChild(div);
-        loadRSS(c.rss, `rss-${c.nombre.replace(/\s+/g,'')}`);
-      });
-
-      document.getElementById('step2').classList.add('hidden');
-      document.getElementById('resultado').classList.remove('hidden');
-    }
-
-    function reset() {
-      tema = '';
-      document.getElementById('step1').classList.remove('hidden');
-      document.getElementById('step2').classList.add('hidden');
-      document.getElementById('resultado').classList.add('hidden');
-    }
-
-    function loadRSS(feedUrl, elementId) {
-      fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`)
-        .then(res => res.json())
-        .then(data => {
-          const el = document.getElementById(elementId);
-          if (!data.items) return el.innerHTML = '<li>No hay noticias disponibles</li>';
-          el.innerHTML = data.items.slice(0, 3).map(i => `<li><a href="${i.link}" target="_blank">${i.title}</a></li>`).join('');
-        })
-        .catch(() => {
-          const el = document.getElementById(elementId);
-          el.innerHTML = '<li>Error al cargar noticias</li>';
-        });
-    }
+      document.getElementById("form").style.display = "none";
+      document.getElementById("response").style.display = "block";
+    });
   </script>
 </body>
 </html>
