@@ -1,126 +1,91 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Guía de Voto 2025 - Carolina</title>
-<style>
-body{font-family:Arial,sans-serif;background:#eef2f5;color:#333;padding:15px;}
-.container{max-width:720px;margin:auto;background:#fff;padding:20px;border-radius:8px;}
-h1,h2{text-align:center;color:#1a73e8;}
-button{width:100%;padding:12px;margin:8px 0;border:none;border-radius:6px;background:#1a73e8;color:#fff;cursor:pointer;font-size:1em;}
-.item{background:#f9f9f9;padding:12px;margin:10px 0;border-radius:6px;}
-.item img{max-width:100%;border-radius:6px;margin-top:8px;}
-.back{margin-top:12px;}
-.hidden{display:none;}
-a{word-break:break-word;color:#1a73e8;}
-#mapa svg{width:100%;height:auto;margin:10px 0;}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía de Voto - Carolina</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 20px; }
+    .container { max-width: 800px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; }
+    h1, h2 { text-align: center; color: #2c3e50; }
+    button { background: #3498db; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; margin: 5px 0; cursor: pointer; font-size: 16px; }
+    .hidden { display: none; }
+    .result { background: #ecf0f1; padding: 10px; margin-top: 10px; border-radius: 6px; }
+    .result img { max-width: 100%; height: auto; margin-top: 10px; }
+    iframe { width: 100%; height: 500px; border: none; margin-top: 20px; }
+    .map-container { text-align: center; margin: 20px 0; }
+    svg { width: 100%; height: auto; max-width: 600px; }
+    svg rect:hover { fill: #2980b9; cursor: pointer; }
+  </style>
 </head>
 <body>
-<div class="container">
-<h1>Guía de Voto 2025 - Carolina</h1>
+  <div class="container">
+    <h1>Guía de Voto 2025 - Carolina</h1>
+    <div id="menu">
+      <h2>Elegí tu localidad</h2>
+      <div class="map-container">
+        <svg viewBox="0 0 600 200">
+          <rect id="LasHeras" x="50" y="50" width="200" height="100" fill="#bdc3c7" stroke="#2c3e50" />
+          <rect id="RioGallegos" x="300" y="50" width="200" height="100" fill="#bdc3c7" stroke="#2c3e50" />
+        </svg>
+      </div>
+    </div>
 
-<!-- MENU -->
-<div id="menu">
-  <h2>Seleccioná tu distrito</h2>
-  <div id="mapa">
-    <!-- Mapa de Santa Cruz (simplificado) -->
-    <svg viewBox="0 0 600 400">
-      <rect x="50" y="50" width="200" height="120" fill="#cce5ff" stroke="#1a73e8" id="LasHeras"/>
-      <rect x="300" y="50" width="200" height="120" fill="#cce5ff" stroke="#1a73e8" id="RioGallegos"/>
-    </svg>
+    <div id="results" class="hidden">
+      <h2>Resultados</h2>
+      <div id="output"></div>
+      <button onclick="goBack()">Volver al inicio</button>
+    </div>
+
+    <h2>Dejanos tu opinión</h2>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScltSYKKuj3BfgIdjMyP7dyRzq3WmQEP2SeWoW1hdYqx-4Vfw/viewform?embedded=true">Cargando…</iframe>
   </div>
-  <button onclick="setTema('Educación')">Elegir por tema</button>
-</div>
 
-<!-- PASO TEMA -->
-<div id="stepTema" class="hidden">
-  <h2>¿Qué tema te importa?</h2>
-  <button onclick="setTema('Educación')">Educación</button>
-  <button onclick="setTema('Economía')">Economía</button>
-  <button onclick="setTema('Seguridad')">Seguridad</button>
-  <button onclick="setTema('Salud')">Salud</button>
-</div>
+  <script>
+    const data = {
+      LasHeras: {
+        nombre: 'Javier S. Jara',
+        genero: 'm',
+        distrito: 'Las Heras',
+        bloque: 'Por Santa Cruz',
+        bio: 'Vicepresidente 1º de la Cámara, con trayectoria en gestión local.',
+        educacion: 'Apoya recursos a escuelas rurales.',
+        foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Silueta_de_usuario.png/240px-Silueta_de_usuario.png'
+      },
+      RioGallegos: {
+        nombre: 'Eloy Echazú',
+        genero: 'm',
+        distrito: 'Río Gallegos',
+        bloque: 'Unión por la Patria',
+        bio: 'Participa en comisiones de juventud.',
+        educacion: 'Mayor presencia policial urbana.',
+        foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Silueta_de_usuario.png/240px-Silueta_de_usuario.png'
+      }
+    };
 
-<!-- FILTRO GÉNERO -->
-<div id="stepGenero" class="hidden">
-  <h2>Filtro por género</h2>
-  <button onclick="filtrar('t')">Todo</button>
-  <button onclick="filtrar('f')">Femenino</button>
-  <button onclick="filtrar('m')">Masculino</button>
-</div>
+    document.getElementById("LasHeras").addEventListener("click", () => mostrarDatos("LasHeras"));
+    document.getElementById("RioGallegos").addEventListener("click", () => mostrarDatos("RioGallegos"));
 
-<!-- RESULTADOS -->
-<div id="resultado" class="hidden">
-  <h2>Resultados</h2><div id="items"></div>
-  <button class="back" onclick="resetAll()">◀ Volver al inicio</button>
-</div>
+    function mostrarDatos(key) {
+      const d = data[key];
+      document.getElementById("menu").classList.add("hidden");
+      const output = document.getElementById("output");
+      output.innerHTML = `
+        <div class="result">
+          <h3>${d.nombre}</h3>
+          <p><strong>Distrito:</strong> ${d.distrito} | <strong>Bloque:</strong> ${d.bloque}</p>
+          <p>${d.bio}</p>
+          <p><strong>Educación:</strong> ${d.educacion}</p>
+          <img src="${d.foto}" alt="${d.nombre}"/>
+        </div>
+      `;
+      document.getElementById("results").classList.remove("hidden");
+    }
 
-<!-- FORM FEEDBACK -->
-<h2>Dejanos tu opinión</h2>
-<iframe src="https://docs.google.com/forms/d/e/REAL_FORM_ID/viewform?embedded=true" width="100%" height="600"></iframe>
-</div>
-
-<script>
-// Datos de ejemplo, ampliá con todos los diputados
-const data = {
-  LasHeras: {nombre:'Javier S. Jara',genero:'m',distrito:'Las Heras',bloque:'Por Santa Cruz',
-    bio:'Vicepresidente 1° de la Cámara...',
-    posiciones:{Educación:'Recursos a escuelas rurales',Economía:'Apoya PyMEs',Seguridad:'Presencia policial urbana',Salud:'"..."},
-    foto:'https://upload.wikimedia.org/.../Javier_Jara.jpg',
-    rss:'https://www.tiempofm.com/rss'}
-};
-
-let seleccionado = 'mapa', tema = '', genero='';
-
-// Interacciones
-document.querySelectorAll('#mapa svg rect').forEach(el=>el.addEventListener('click',()=>{
-  seleccionado = el.id; document.getElementById('stepTema').classList.remove('hidden');
-  document.getElementById('menu').classList.add('hidden');
-}));
-
-function setTema(t){
-  tema = t; document.getElementById('stepTema').classList.add('hidden');
-  document.getElementById('stepGenero').classList.remove('hidden');
-}
-
-function filtrar(g){
-  genero = g; document.getElementById('stepGenero').classList.add('hidden');
-  const c = data[seleccionado];
-  if(c && (g==='t'||c.genero===g)){
-    showCandidate(c);
-  } else document.getElementById('items').innerHTML='<p>No hay coincidencias</p>';
-  document.getElementById('resultado').classList.remove('hidden');
-}
-
-function showCandidate(c){
-  const div = document.createElement('div'); div.className='item';
-  div.innerHTML = `<h3>${c.nombre}</h3>
-    <p><strong>Distrito:</strong> ${c.distrito} | <strong>Bloque:</strong> ${c.bloque}</p>
-    <p>${c.bio}</p><p><strong>${tema}:</strong> ${c.posiciones[tema]||'N/A'}</p>
-    <img src="${c.foto}" alt="${c.nombre}"/>
-    <p><strong>Noticias:</strong></p><ul id="rss-${c.distrito}"><li>Cargando...</li></ul>`;
-  document.getElementById('items').appendChild(div);
-  loadRSS(c.rss, `rss-${c.distrito}`);
-}
-
-function loadRSS(url, elid){
-  fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`)
-  .then(r=>r.json()).then(d=>{
-    const el=document.getElementById(elid);
-    if(!d.items) return el.innerHTML='<li>No hay noticias</li>';
-    el.innerHTML=d.items.slice(0,3).map(i=>`<li><a href="${i.link}" target="_blank">${i.title}</a></li>`).join('');
-  }).catch(_=>{document.getElementById(elid).innerHTML='<li>Error cargando</li>';});
-}
-
-function resetAll(){
-  seleccionado='mapa'; tema=genero='';
-  document.getElementById('resultado').classList.add('hidden');
-  document.getElementById('stepGenero').classList.add('hidden');
-  document.getElementById('stepTema').classList.add('hidden');
-  document.getElementById('menu').classList.remove('hidden');
-}
-</script>
+    function goBack() {
+      document.getElementById("results").classList.add("hidden");
+      document.getElementById("menu").classList.remove("hidden");
+    }
+  </script>
 </body>
 </html>
