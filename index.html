@@ -1,115 +1,126 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guía de Voto - Carolina</title>
-  <style>
-    body { font-family: Arial, sans-serif; background: #eef2f5; color: #333; padding: 20px; }
-    .container { max-width: 700px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-    h1, h2 { color: #1a73e8; text-align: center; }
-    button { padding: 10px; margin: 10px 0; width: 100%; background: #1a73e8; color: white; border: none; border-radius: 8px; cursor: pointer; }
-    .hidden { display: none; }
-    .item { padding: 15px; border: 1px solid #ddd; margin: 10px 0; border-radius: 8px; background: #f9f9f9; }
-    .item h3 { margin: 0 0 5px 0; }
-    .item img { max-width: 100%; border-radius: 8px; margin-top: 10px; }
-    .back { margin-top: 20px; }
-    iframe { width: 100%; height: 600px; border: none; margin-top: 20px; }
-    a { word-wrap: break-word; display: block; }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Guía de Voto 2025 - Carolina</title>
+<style>
+body{font-family:Arial,sans-serif;background:#eef2f5;color:#333;padding:15px;}
+.container{max-width:720px;margin:auto;background:#fff;padding:20px;border-radius:8px;}
+h1,h2{text-align:center;color:#1a73e8;}
+button{width:100%;padding:12px;margin:8px 0;border:none;border-radius:6px;background:#1a73e8;color:#fff;cursor:pointer;font-size:1em;}
+.item{background:#f9f9f9;padding:12px;margin:10px 0;border-radius:6px;}
+.item img{max-width:100%;border-radius:6px;margin-top:8px;}
+.back{margin-top:12px;}
+.hidden{display:none;}
+a{word-break:break-word;color:#1a73e8;}
+#mapa svg{width:100%;height:auto;margin:10px 0;}
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Guía de Voto 2025 - Carolina</h1>
-    <div id="step1">
-      <p><strong>1. ¿Qué tema te preocupa más?</strong></p>
-      <button onclick="setTema('Educación')">Educación</button>
-      <button onclick="setTema('Economía')">Economía</button>
-      <button onclick="setTema('Seguridad')">Seguridad</button>
-      <button onclick="setTema('Salud')">Salud</button>
-    </div>
-    <div id="step2" class="hidden">
-      <p><strong>2. Filtro por género:</strong></p>
-      <button onclick="filtrarGenero('t')">Todas</button>
-      <button onclick="filtrarGenero('f')">Femenino</button>
-      <button onclick="filtrarGenero('m')">Masculino</button>
-    </div>
-    <div id="resultado" class="hidden">
-      <h2>Resultados</h2>
-      <div id="items"></div>
-      <button class="back" onclick="reset()">◀ Volver al inicio</button>
-    </div>
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScltSYKKuj3BfgIdjMyP7dyRzq3WmQEP2SeWoW1hdYqx-4Vfw/viewform?embedded=true" allowfullscreen></iframe>
+<div class="container">
+<h1>Guía de Voto 2025 - Carolina</h1>
+
+<!-- MENU -->
+<div id="menu">
+  <h2>Seleccioná tu distrito</h2>
+  <div id="mapa">
+    <!-- Mapa de Santa Cruz (simplificado) -->
+    <svg viewBox="0 0 600 400">
+      <rect x="50" y="50" width="200" height="120" fill="#cce5ff" stroke="#1a73e8" id="LasHeras"/>
+      <rect x="300" y="50" width="200" height="120" fill="#cce5ff" stroke="#1a73e8" id="RioGallegos"/>
+    </svg>
   </div>
-  <script>
-    const data = {
-      'Educación': [
-        {nombre:'Javier S. Jara', genero:'m', distrito:'Las Heras', bloque:'Por Santa Cruz', bio:'Vicepresidente 1° de la Cámara, con trayectoria en gestión local.', posicion:'Apoya recursos a escuelas rurales.', foto:'https://carolinasemprini.github.io/img/jara.jpg', rss:'https://www.laventanaindiscretadejh.com/rss.xml'},
-        {nombre:'Fabiola Loreiro', genero:'f', distrito:'Puerto Santa Cruz', bloque:'Por Santa Cruz', bio:'Diputada activa en puericultura.', posicion:'Impulsó programas de apoyo escolar.', foto:'https://carolinasemprini.github.io/img/loreiro.jpg', rss:'https://www.santacruz.gob.ar/rss.xml'}
-      ],
-      'Economía': [
-        {nombre:'Daniel Peralta', genero:'m', distrito:'Provincia', bloque:'Unión por la Patria', bio:'Ex gobernador, experiencia en temas económicos.', posicion:'Promueve inversiones y empleo.', foto:'https://carolinasemprini.github.io/img/peralta.jpg', rss:'https://www.lopinionautral.com.ar/rss'}
-      ],
-      'Seguridad': [
-        {nombre:'Eloy Echazú', genero:'m', distrito:'Río Gallegos', bloque:'Unión por la Patria', bio:'Participa en comisiones de juventud.', posicion:'Mayor presencia policial urbana.', foto:'https://carolinasemprini.github.io/img/echazu.jpg', rss:'https://www.tiempofm.com/rss'}
-      ],
-      'Salud': [
-        {nombre:'Fabiola Loreiro', genero:'f', distrito:'Puerto Santa Cruz', bloque:'Por Santa Cruz', bio:'Impulsa legislación de salud materna.', posicion:'Promueve atención primaria.', foto:'https://carolinasemprini.github.io/img/loreiro.jpg', rss:'https://www.santacruz.gob.ar/rss.xml'}
-      ]
-    };
+  <button onclick="setTema('Educación')">Elegir por tema</button>
+</div>
 
-    let tema = '', genero = '';
+<!-- PASO TEMA -->
+<div id="stepTema" class="hidden">
+  <h2>¿Qué tema te importa?</h2>
+  <button onclick="setTema('Educación')">Educación</button>
+  <button onclick="setTema('Economía')">Economía</button>
+  <button onclick="setTema('Seguridad')">Seguridad</button>
+  <button onclick="setTema('Salud')">Salud</button>
+</div>
 
-    function setTema(t) {
-      tema = t;
-      document.getElementById('step1').classList.add('hidden');
-      document.getElementById('step2').classList.remove('hidden');
-    }
+<!-- FILTRO GÉNERO -->
+<div id="stepGenero" class="hidden">
+  <h2>Filtro por género</h2>
+  <button onclick="filtrar('t')">Todo</button>
+  <button onclick="filtrar('f')">Femenino</button>
+  <button onclick="filtrar('m')">Masculino</button>
+</div>
 
-    function filtrarGenero(g) {
-      genero = g;
-      const candidatos = data[tema].filter(c => g === 't' || c.genero === g);
-      const items = document.getElementById('items');
-      items.innerHTML = '';
+<!-- RESULTADOS -->
+<div id="resultado" class="hidden">
+  <h2>Resultados</h2><div id="items"></div>
+  <button class="back" onclick="resetAll()">◀ Volver al inicio</button>
+</div>
 
-      candidatos.forEach(c => {
-        const div = document.createElement('div');
-        div.className = 'item';
-        div.innerHTML = `<h3>${c.nombre}</h3>
-          <p><strong>Distrito:</strong> ${c.distrito} | <strong>Bloque:</strong> ${c.bloque}</p>
-          <p>${c.bio}</p>
-          <p><strong>${tema}:</strong> ${c.posicion}</p>
-          <img src="${c.foto}" alt="${c.nombre}">
-          <p><strong>Noticias recientes:</strong></p>
-          <ul id="rss-${c.nombre.replace(/\s+/g,'')}">Cargando...</ul>`;
-        items.appendChild(div);
-        loadRSS(c.rss, `rss-${c.nombre.replace(/\s+/g,'')}`);
-      });
+<!-- FORM FEEDBACK -->
+<h2>Dejanos tu opinión</h2>
+<iframe src="https://docs.google.com/forms/d/e/REAL_FORM_ID/viewform?embedded=true" width="100%" height="600"></iframe>
+</div>
 
-      document.getElementById('step2').classList.add('hidden');
-      document.getElementById('resultado').classList.remove('hidden');
-    }
+<script>
+// Datos de ejemplo, ampliá con todos los diputados
+const data = {
+  LasHeras: {nombre:'Javier S. Jara',genero:'m',distrito:'Las Heras',bloque:'Por Santa Cruz',
+    bio:'Vicepresidente 1° de la Cámara...',
+    posiciones:{Educación:'Recursos a escuelas rurales',Economía:'Apoya PyMEs',Seguridad:'Presencia policial urbana',Salud:'"..."},
+    foto:'https://upload.wikimedia.org/.../Javier_Jara.jpg',
+    rss:'https://www.tiempofm.com/rss'}
+};
 
-    function reset() {
-      tema = '';
-      document.getElementById('step1').classList.remove('hidden');
-      document.getElementById('step2').classList.add('hidden');
-      document.getElementById('resultado').classList.add('hidden');
-    }
+let seleccionado = 'mapa', tema = '', genero='';
 
-    function loadRSS(feedUrl, elementId) {
-      fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`)
-        .then(res => res.json())
-        .then(data => {
-          const el = document.getElementById(elementId);
-          if (!data.items) return el.innerHTML = '<li>No hay noticias disponibles</li>';
-          el.innerHTML = data.items.slice(0, 3).map(i => `<li><a href="${i.link}" target="_blank">${i.title}</a></li>`).join('');
-        })
-        .catch(() => {
-          const el = document.getElementById(elementId);
-          el.innerHTML = '<li>Error al cargar noticias</li>';
-        });
-    }
-  </script>
+// Interacciones
+document.querySelectorAll('#mapa svg rect').forEach(el=>el.addEventListener('click',()=>{
+  seleccionado = el.id; document.getElementById('stepTema').classList.remove('hidden');
+  document.getElementById('menu').classList.add('hidden');
+}));
+
+function setTema(t){
+  tema = t; document.getElementById('stepTema').classList.add('hidden');
+  document.getElementById('stepGenero').classList.remove('hidden');
+}
+
+function filtrar(g){
+  genero = g; document.getElementById('stepGenero').classList.add('hidden');
+  const c = data[seleccionado];
+  if(c && (g==='t'||c.genero===g)){
+    showCandidate(c);
+  } else document.getElementById('items').innerHTML='<p>No hay coincidencias</p>';
+  document.getElementById('resultado').classList.remove('hidden');
+}
+
+function showCandidate(c){
+  const div = document.createElement('div'); div.className='item';
+  div.innerHTML = `<h3>${c.nombre}</h3>
+    <p><strong>Distrito:</strong> ${c.distrito} | <strong>Bloque:</strong> ${c.bloque}</p>
+    <p>${c.bio}</p><p><strong>${tema}:</strong> ${c.posiciones[tema]||'N/A'}</p>
+    <img src="${c.foto}" alt="${c.nombre}"/>
+    <p><strong>Noticias:</strong></p><ul id="rss-${c.distrito}"><li>Cargando...</li></ul>`;
+  document.getElementById('items').appendChild(div);
+  loadRSS(c.rss, `rss-${c.distrito}`);
+}
+
+function loadRSS(url, elid){
+  fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`)
+  .then(r=>r.json()).then(d=>{
+    const el=document.getElementById(elid);
+    if(!d.items) return el.innerHTML='<li>No hay noticias</li>';
+    el.innerHTML=d.items.slice(0,3).map(i=>`<li><a href="${i.link}" target="_blank">${i.title}</a></li>`).join('');
+  }).catch(_=>{document.getElementById(elid).innerHTML='<li>Error cargando</li>';});
+}
+
+function resetAll(){
+  seleccionado='mapa'; tema=genero='';
+  document.getElementById('resultado').classList.add('hidden');
+  document.getElementById('stepGenero').classList.add('hidden');
+  document.getElementById('stepTema').classList.add('hidden');
+  document.getElementById('menu').classList.remove('hidden');
+}
+</script>
 </body>
 </html>
