@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía de Voto - Carolina</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f4f8; color: #333; padding: 20px; }
+    .container { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    h1 { text-align: center; color: #1a73e8; }
+    button { padding: 10px 20px; margin: 10px 0; background: #1a73e8; color: white; border: none; border-radius: 8px; cursor: pointer; width: 100%; }
+    .result { margin-top: 20px; font-weight: bold; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Guía de Voto 2025 - Carolina</h1>
+    <p>Responda las siguientes preguntas para conocer qué partido o enfoque coincide más con sus ideas:</p>
+
+    <div id="quiz">
+      <p><strong>1. ¿Qué tema le preocupa más?</strong></p>
+      <button onclick="next(1)">Educación</button>
+      <button onclick="next(2)">Economía</button>
+      <button onclick="next(3)">Seguridad</button>
+    </div>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function next(choice) {
+      const result = document.getElementById('result');
+      const quiz = document.getElementById('quiz');
+      quiz.style.display = 'none';
+
+      let message = '';
+      if (choice === 1) message = 'Coincidís con propuestas centradas en el fortalecimiento educativo.';
+      if (choice === 2) message = 'Tu enfoque es la reactivación económica y la generación de empleo.';
+      if (choice === 3) message = 'Te importa principalmente la seguridad y el orden público.';
+
+      result.textContent = message + ' Consultá plataformas de partidos locales para saber más.';
+    }
+  </script>
+</body>
+</html>
