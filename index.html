@@ -13,22 +13,18 @@
     .result { background: #ecf0f1; padding: 10px; margin-top: 10px; border-radius: 6px; }
     .result img { max-width: 100%; height: auto; margin-top: 10px; }
     iframe { width: 100%; height: 500px; border: none; margin-top: 20px; }
-    .map-container { text-align: center; margin: 20px 0; }
-    svg { width: 100%; height: auto; max-width: 600px; }
-    svg rect:hover { fill: #2980b9; cursor: pointer; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Guía de Voto 2025 - Carolina</h1>
+
     <div id="menu">
-      <h2>Elegí tu localidad</h2>
-      <div class="map-container">
-        <svg viewBox="0 0 600 200">
-          <rect id="LasHeras" x="50" y="50" width="200" height="100" fill="#bdc3c7" stroke="#2c3e50" />
-          <rect id="RioGallegos" x="300" y="50" width="200" height="100" fill="#bdc3c7" stroke="#2c3e50" />
-        </svg>
-      </div>
+      <h2>¿Qué tema te preocupa más?</h2>
+      <button onclick="mostrarResultados('Educación')">Educación</button>
+      <button onclick="mostrarResultados('Economía')">Economía</button>
+      <button onclick="mostrarResultados('Seguridad')">Seguridad</button>
+      <button onclick="mostrarResultados('Salud')">Salud</button>
     </div>
 
     <div id="results" class="hidden">
@@ -38,47 +34,25 @@
     </div>
 
     <h2>Dejanos tu opinión</h2>
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScltSYKKuj3BfgIdjMyP7dyRzq3WmQEP2SeWoW1hdYqx-4Vfw/viewform?embedded=true">Cargando…</iframe>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfQ8gH5RpDYZ0Rr-pNdkJxQAt9bI9bIINgDhW0M3a_1uTzKAw/viewform?embedded=true" allowfullscreen>Loading…</iframe>
   </div>
 
   <script>
-    const data = {
-      LasHeras: {
-        nombre: 'Javier S. Jara',
-        genero: 'm',
-        distrito: 'Las Heras',
-        bloque: 'Por Santa Cruz',
-        bio: 'Vicepresidente 1º de la Cámara, con trayectoria en gestión local.',
-        educacion: 'Apoya recursos a escuelas rurales.',
-        foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Silueta_de_usuario.png/240px-Silueta_de_usuario.png'
-      },
-      RioGallegos: {
-        nombre: 'Eloy Echazú',
-        genero: 'm',
-        distrito: 'Río Gallegos',
-        bloque: 'Unión por la Patria',
-        bio: 'Participa en comisiones de juventud.',
-        educacion: 'Mayor presencia policial urbana.',
-        foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Silueta_de_usuario.png/240px-Silueta_de_usuario.png'
-      }
-    };
-
-    document.getElementById("LasHeras").addEventListener("click", () => mostrarDatos("LasHeras"));
-    document.getElementById("RioGallegos").addEventListener("click", () => mostrarDatos("RioGallegos"));
-
-    function mostrarDatos(key) {
-      const d = data[key];
-      document.getElementById("menu").classList.add("hidden");
+    function mostrarResultados(tema) {
+      const info = {
+        'Educación': 'Mejorar la calidad educativa y el acceso a la educación rural.',
+        'Economía': 'Promover empleo, inversiones y desarrollo local.',
+        'Seguridad': 'Aumentar la presencia policial y mejorar infraestructura.',
+        'Salud': 'Fortalecer la atención primaria y el acceso a medicamentos.'
+      };
       const output = document.getElementById("output");
       output.innerHTML = `
         <div class="result">
-          <h3>${d.nombre}</h3>
-          <p><strong>Distrito:</strong> ${d.distrito} | <strong>Bloque:</strong> ${d.bloque}</p>
-          <p>${d.bio}</p>
-          <p><strong>Educación:</strong> ${d.educacion}</p>
-          <img src="${d.foto}" alt="${d.nombre}"/>
+          <h3>${tema}</h3>
+          <p>${info[tema]}</p>
         </div>
       `;
+      document.getElementById("menu").classList.add("hidden");
       document.getElementById("results").classList.remove("hidden");
     }
 
