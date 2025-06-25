@@ -14,7 +14,8 @@
     .item h3 { margin: 0 0 5px 0; }
     .item img { max-width: 100%; border-radius: 8px; margin-top: 10px; }
     .back { margin-top: 20px; }
-    iframe { width: 100%; height: 500px; border: none; margin-top: 20px; }
+    iframe { width: 100%; height: 600px; border: none; margin-top: 20px; }
+    a { word-wrap: break-word; display: block; }
   </style>
 </head>
 <body>
@@ -38,22 +39,22 @@
       <div id="items"></div>
       <button class="back" onclick="reset()">◀ Volver al inicio</button>
     </div>
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScZ7FeebackFormURL/viewform?embedded=true" allowfullscreen></iframe>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScltSYKKuj3BfgIdjMyP7dyRzq3WmQEP2SeWoW1hdYqx-4Vfw/viewform?embedded=true" allowfullscreen></iframe>
   </div>
   <script>
     const data = {
       'Educación': [
-        {nombre:'Javier S. Jara', genero:'m', distrito:'Las Heras', bloque:'Por Santa Cruz', bio:'Vicepresidente 1° de la Cámara, con trayectoria en gestión local.', posicion:'Apoya recursos a escuelas rurales.', foto:'https://upload.wikimedia.org/wikipedia/commons/8/89/Javier_Jara.jpg', rss:'https://www.lopinionaustral.com.ar/rss'},
-        {nombre:'Fabiola Loreiro', genero:'f', distrito:'Puerto Santa Cruz', bloque:'Por Santa Cruz', bio:'Diputada activa en puericultura.', posicion:'Impulsó programas de apoyo escolar.', foto:'https://upload.wikimedia.org/wikipedia/commons/a/a1/Fabiola_Loreiro.jpg', rss:'https://www.lavanguardia.com/rss'}
+        {nombre:'Javier S. Jara', genero:'m', distrito:'Las Heras', bloque:'Por Santa Cruz', bio:'Vicepresidente 1° de la Cámara, con trayectoria en gestión local.', posicion:'Apoya recursos a escuelas rurales.', foto:'https://carolinasemprini.github.io/img/jara.jpg', rss:'https://www.laventanaindiscretadejh.com/rss.xml'},
+        {nombre:'Fabiola Loreiro', genero:'f', distrito:'Puerto Santa Cruz', bloque:'Por Santa Cruz', bio:'Diputada activa en puericultura.', posicion:'Impulsó programas de apoyo escolar.', foto:'https://carolinasemprini.github.io/img/loreiro.jpg', rss:'https://www.santacruz.gob.ar/rss.xml'}
       ],
       'Economía': [
-        {nombre:'Daniel Peralta', genero:'m', distrito:'Provincia', bloque:'Unión por la Patria', bio:'Ex gobernador, experiencia en temas económicos.', posicion:'Promueve inversiones y empleo.', foto:'https://upload.wikimedia.org/wikipedia/commons/5/5c/Daniel_Peralta.jpg', rss:'https://www.pagina12.com.ar/rss'}
+        {nombre:'Daniel Peralta', genero:'m', distrito:'Provincia', bloque:'Unión por la Patria', bio:'Ex gobernador, experiencia en temas económicos.', posicion:'Promueve inversiones y empleo.', foto:'https://carolinasemprini.github.io/img/peralta.jpg', rss:'https://www.lopinionautral.com.ar/rss'}
       ],
       'Seguridad': [
-        {nombre:'Eloy Echazú', genero:'m', distrito:'Río Gallegos', bloque:'Unión por la Patria', bio:'Participa en comisiones de juventud.', posicion:'Mayor presencia policial urbana.', foto:'https://upload.wikimedia.org/wikipedia/commons/9/9d/Eloy_Echazu.jpg', rss:'https://www.infobae.com/america/rss'}
+        {nombre:'Eloy Echazú', genero:'m', distrito:'Río Gallegos', bloque:'Unión por la Patria', bio:'Participa en comisiones de juventud.', posicion:'Mayor presencia policial urbana.', foto:'https://carolinasemprini.github.io/img/echazu.jpg', rss:'https://www.tiempofm.com/rss'}
       ],
       'Salud': [
-        {nombre:'Fabiola Loreiro', genero:'f', distrito:'Puerto Santa Cruz', bloque:'Por Santa Cruz', bio:'Impulsa legislación de salud materna.', posicion:'Promueve atención primaria.', foto:'https://upload.wikimedia.org/wikipedia/commons/a/a1/Fabiola_Loreiro.jpg', rss:'https://www.clarin.com/rss'}
+        {nombre:'Fabiola Loreiro', genero:'f', distrito:'Puerto Santa Cruz', bloque:'Por Santa Cruz', bio:'Impulsa legislación de salud materna.', posicion:'Promueve atención primaria.', foto:'https://carolinasemprini.github.io/img/loreiro.jpg', rss:'https://www.santacruz.gob.ar/rss.xml'}
       ]
     };
 
